@@ -13,8 +13,7 @@ public class LoginCheck  extends TestCaseBase{
 
     @Test
     public void TC001_NavigateToHomage(){
-
-        driver = getDriver();
+        driver = DriverManager.getInstance().getDriver();
         System.out.println(driver.getTitle());
     }
 }

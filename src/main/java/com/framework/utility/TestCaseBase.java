@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class TestCaseBase {
-    private static DriverManager driverManager;
+
     @BeforeClass
     public void browserSetup() throws IOException {
         launchBrowser(DataReader.getProperty("url"));
@@ -22,8 +22,7 @@ public class TestCaseBase {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-infobars");
         WebDriver driver = new ChromeDriver(options);
-        driverManager = new DriverManager();
-        driverManager.setDriver(driver);
+        DriverManager.getInstance().setDriver(driver);
         driver.get(url);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -33,8 +32,5 @@ public class TestCaseBase {
     public void closeBrowser(WebDriver driver){
         System.out.println("Quiting Browser");
         driver.quit();
-    }
-    protected WebDriver getDriver() {
-        return driverManager.getDriver();
     }
 }
