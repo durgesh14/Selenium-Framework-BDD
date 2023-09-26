@@ -2,7 +2,7 @@
 <suite name="Test-Suite" >
     <test name="ToolsQA" >
         <classes>
-            <class name="com.zoro.seleniumframework.MainPageTest" />
+            <class name="com.framework.testCases.LoginCheck" />
         </classes>
     </test>
 </suite>
