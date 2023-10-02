@@ -1,10 +1,14 @@
 package com.framework.pageObjects;
 
+import com.framework.utility.DataReader;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
+
+import java.io.IOException;
+import java.util.Map;
 
 public class HomePageObject {
 
@@ -34,13 +38,13 @@ public class HomePageObject {
         createAccount.click();
     }
 
-    public void enterdetail(String firstname, String lastname, String email, String password, String confirm_pass){
+    public void enterdetail(Map <String, String> testDataMap) throws IOException {
 
-        firstname_id.sendKeys(firstname);
-        lastname_id.sendKeys(lastname);
-        email_address_id.sendKeys(email);
-        password_id.sendKeys(password);
-        password_confirmation_id.sendKeys(confirm_pass);
+        firstname_id.sendKeys(testDataMap.get(DataReader.getProperty("firstNameColumn")));
+        lastname_id.sendKeys(testDataMap.get(DataReader.getProperty("lastNameColumn")));
+        email_address_id.sendKeys(testDataMap.get(DataReader.getProperty("emailColumn")));
+        password_id.sendKeys(testDataMap.get(DataReader.getProperty("passwordColumn")));
+        password_confirmation_id.sendKeys(testDataMap.get(DataReader.getProperty("ConfirmPasswordColumn")));
 
     }
 }
