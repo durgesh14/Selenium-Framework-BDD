@@ -1,5 +1,7 @@
 package com.framework.utility;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.framework.listeners.EventListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -7,7 +9,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverListener;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 
 import java.io.IOException;
@@ -19,14 +23,30 @@ public class TestCaseBase {
     public void browserSetup() throws IOException {
         launchBrowser(DataReader.getProperty("url"));
     }
-    @AfterClass
-    public void tearDown(){
+
+    @AfterClass(alwaysRun = true)
+    public void tearDown() {
         WebDriver driver = DriverManager.getInstance().getDriver();
         DriverManager.getInstance().getEventFiringWebDriver().unregister(DriverManager.getInstance().getEventListener());
         closeBrowser(driver);
     }
 
-    public WebDriver launchBrowser(String url){
+    @AfterMethod(alwaysRun = true)
+    public void methodClose(ITestResult result) {
+        WebDriver driver = DriverManager.getInstance().getDriver();
+        String testCaseName = result.getMethod().getConstructorOrMethod().getName();
+        if (result.getStatus() == ITestResult.FAILURE) {
+            String screenShotPath = ScreenshotUtility.takeFullScreenshot(driver, testCaseName + "_FAILED");
+            try {
+                ExtentManager.getTest().error("Screenshot", MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+            } catch (IOException e) {
+                Log.error("Error during capturing screenshot: " + e);
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public WebDriver launchBrowser(String url) {
         System.out.println("Opening Browser");
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
@@ -45,7 +65,7 @@ public class TestCaseBase {
         return driver;
     }
 
-    public void closeBrowser(WebDriver driver){
+    public void closeBrowser(WebDriver driver) {
         System.out.println("Quiting Browser");
         driver.quit();
     }

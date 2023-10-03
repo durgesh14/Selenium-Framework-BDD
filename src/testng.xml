@@ -2,7 +2,7 @@
 <suite name="Test-Suite" >
     <test name="ToolsQA" >
         <classes>
-            <class name="com.framework.testCases.SearchForStay" />
+            <class name="com.framework.testCases.HotelBooking" />
         </classes>
     </test>
 </suite>
