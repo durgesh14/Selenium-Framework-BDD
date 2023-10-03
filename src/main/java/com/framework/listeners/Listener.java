@@ -11,7 +11,8 @@ import org.testng.ITestResult;
 public class Listener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentManager.startTest(result.getName());
+//        ExtentManager.startTest(result.getName());
+        ExtentManager.startTest(result.getTestClass().getName());
         Log.startTestCase(result.getName());
     }
 

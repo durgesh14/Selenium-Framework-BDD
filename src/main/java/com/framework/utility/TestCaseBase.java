@@ -19,9 +19,10 @@ import java.util.concurrent.TimeUnit;
 
 public class TestCaseBase {
 
-    @BeforeClass
-    public void browserSetup() throws IOException {
-        launchBrowser(DataReader.getProperty("url"));
+
+    public void browserSetup(String url) throws IOException {
+//        launchBrowser(DataReader.getProperty("url"));
+        launchBrowser(url);
     }
 
     @AfterClass(alwaysRun = true)
