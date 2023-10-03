@@ -23,7 +23,6 @@ public class LoginCheck  extends TestCaseBase{
         HomePageObject hp = new HomePageObject(driver);
         Map<String, String> testDataMap = new ExcelReader().getTestData("TC001_CreateAccount", excelSheetPath, "Account");
         hp.createAccount();
-//        hp.enterdetail("first", "last", "test12@gmail.com", "Password@123", "Password@123");
         hp.enterdetail(testDataMap);
     }
 }

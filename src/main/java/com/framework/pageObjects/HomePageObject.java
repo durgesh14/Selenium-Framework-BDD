@@ -47,4 +47,5 @@ public class HomePageObject {
         password_confirmation_id.sendKeys(testDataMap.get(DataReader.getProperty("ConfirmPasswordColumn")));
 
     }
+
 }
