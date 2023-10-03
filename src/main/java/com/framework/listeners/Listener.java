@@ -1,6 +1,8 @@
 package com.framework.listeners;
 
+import com.aventstack.extentreports.Status;
 import com.framework.utility.DataReader;
+import com.framework.utility.ExtentManager;
 import com.framework.utility.Log;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
@@ -9,6 +11,7 @@ import org.testng.ITestResult;
 public class Listener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
+        ExtentManager.startTest(result.getName());
         Log.startTestCase(result.getName());
     }
 
@@ -17,7 +20,7 @@ public class Listener implements ITestListener {
         String testCaseName = result.getName();
         String status = testCaseName+"_PASS";
         Log.endTestCase(testCaseName, "PASSED");
-
+        ExtentManager.getTest().log(Status.PASS, status);
     }
 
     @Override
@@ -26,6 +29,7 @@ public class Listener implements ITestListener {
         String status = testCaseName+ "_FAIL";
         Log.error(status);
         Log.endTestCase(testCaseName, "FAILED");
+        ExtentManager.getTest().log(Status.FAIL, status+"\n"+result.getThrowable());
     }
 
     @Override
@@ -33,6 +37,7 @@ public class Listener implements ITestListener {
         String testCaseName = result.getName();
         String status = testCaseName+"_SKIP";
         Log.info(status);
+        ExtentManager.getTest().log(Status.SKIP, status);
     }
 
     @Override
@@ -47,11 +52,11 @@ public class Listener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        ITestListener.super.onStart(context);
+
     }
 
     @Override
     public void onFinish(ITestContext context) {
-        ITestListener.super.onFinish(context);
+        ExtentManager.endTest();
     }
 }
