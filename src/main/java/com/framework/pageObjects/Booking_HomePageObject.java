@@ -1,6 +1,7 @@
 package com.framework.pageObjects;
 
 import com.framework.utility.DataReader;
+import com.framework.utility.Log;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -54,6 +55,7 @@ public class Booking_HomePageObject {
     public void enterDestination(String destinationColumn) {
         if (closePopup.isDisplayed()) {
             closePopup.click();
+            Log.info("Pop up Closed");
         }
         destination.sendKeys(destinationColumn);
         if (autocomplete_res.isDisplayed()) {
@@ -66,6 +68,7 @@ public class Booking_HomePageObject {
 
             }
         }
+        Log.info("Destination added: "+destinationColumn);
 
     }
 
@@ -94,6 +97,7 @@ public class Booking_HomePageObject {
             nextMonth.get(nextMonth.size() - 1).click();
 
         }
+        Log.info("CheckIn Date selected: "+checkinDateColumn);
 
 
 //        int diffCheckin = checkinMonth - currentMonth;
@@ -105,8 +109,6 @@ public class Booking_HomePageObject {
 
         WebElement checkinDate = driver.findElement(By.xpath("//span[@data-date='" + checkinDateColumn + "']"));
         checkinDate.click();
-        System.out.println("Clicked CheckIndate");
-
 
         // Calculate the month difference
         long monthDifferenceCheckout = ChronoUnit.MONTHS.between(currentDate.withDayOfMonth(1), date2.withDayOfMonth(1));
@@ -118,6 +120,7 @@ public class Booking_HomePageObject {
 
         }
 
+
 //        int diffCheckout = checkoutMonth - checkinMonth;
 //        while(diffCheckout > 1){
 //
@@ -128,6 +131,7 @@ public class Booking_HomePageObject {
         WebElement checkoutDate = driver.findElement(By.xpath("//span[@data-date='" + checkoutDateColumn + "']"));
         checkoutDate.click();
         System.out.println("Clicked CheckOutdate");
+        Log.info("Checkout Date Selected: "+checkoutDateColumn);
     }
 
     public void addPersonData(Map<String, String> testDataMap) throws IOException {
@@ -147,6 +151,7 @@ public class Booking_HomePageObject {
             adultAdd.click();
             diffAdult--;
         }
+        Log.info("Added # of adult"+Integer.parseInt(testDataMap.get(DataReader.getProperty("numberOfAdultsColumn"))));
 
         //Rooms
         int rooms = Integer.parseInt(testDataMap.get(DataReader.getProperty("numberOfRoomsColumn"))) - 1;
@@ -154,9 +159,12 @@ public class Booking_HomePageObject {
             roomAdd.click();
         }
 
+        Log.info("Added # of rooms"+rooms+1);
+
     }
 
     public void searchRooms() {
         searchBtn.click();
+        Log.info("Clicked on search");
     }
 }
