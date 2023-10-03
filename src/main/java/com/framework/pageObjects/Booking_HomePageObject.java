@@ -159,7 +159,7 @@ public class Booking_HomePageObject {
             roomAdd.click();
         }
 
-        Log.info("Added # of rooms"+rooms+1);
+        Log.info("Added # of rooms"+ (rooms+1));
 
     }
 
