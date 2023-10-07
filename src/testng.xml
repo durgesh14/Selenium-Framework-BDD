@@ -7,3 +7,5 @@
         </classes>
     </test>
 </suite>
+
+<!-- allure serve allure-results-->

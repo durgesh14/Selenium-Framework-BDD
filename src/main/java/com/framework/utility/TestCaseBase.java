@@ -13,11 +13,17 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class TestCaseBase {
+
+    @BeforeSuite
+    public void allureConfigurator() throws IOException {
+        AllureConfig.configure();
+    }
 
 
     public void browserSetup(String url) throws IOException {
@@ -49,7 +55,8 @@ public class TestCaseBase {
 
     public WebDriver launchBrowser(String url) {
         System.out.println("Opening Browser");
-        WebDriverManager.chromedriver().setup();
+//        WebDriverManager.chromedriver().setup();
+        System.setProperty("webdriver.chrome.driver", "D:\\Projects\\Selenium-Framework\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-infobars");
         WebDriver driver = new ChromeDriver(options);

@@ -2,7 +2,6 @@ package com.framework.scripts;
 
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
-import com.framework.modules.SearchStayModule;
 import com.framework.modules.SearchflightModule;
 import com.framework.utility.DataReader;
 import com.framework.utility.ExcelReader;
@@ -23,9 +22,26 @@ public class SearchFlightScript {
 
     }
 
-    public void findFlight() {
+    public void getTitle() {
         ExtentTest test = ExtentManager.getTest();
         String flightPageHeader = searchflightModule.getHeaderText();
-        Log.info("Flight page header text is: " + flightPageHeader);
+        test.log(Status.INFO, "Flight page header text is: " + flightPageHeader);
+
+    }
+
+    public void selectOneWay() {
+        ExtentTest test = ExtentManager.getTest();
+         searchflightModule.selectOneWay();
+        test.log(Status.INFO, "Selected One Way Flight");
+    }
+
+    public void addDestination(String testCaseName) throws Exception {
+        ExtentTest test = ExtentManager.getTest();
+        Map<String, String> testDataMap = new ExcelReader().getTestData(testCaseName, excelSheetPath, "flight");
+        String destinationExpected = testDataMap.get(DataReader.getProperty("destinationColumn"));
+        String destinationActual = searchflightModule.addDestination(destinationExpected);
+        test.log(Status.INFO, "Actual Destination is "+ destinationActual);
+        test.log(Status.INFO, "Expected Destination is "+ destinationExpected);
+
     }
 }

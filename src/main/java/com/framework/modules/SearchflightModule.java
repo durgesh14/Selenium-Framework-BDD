@@ -1,12 +1,7 @@
 package com.framework.modules;
 
-import com.framework.pageObjects.Booking_HomePageObject;
 import com.framework.pageObjects.FlightHomePageObject;
-import com.framework.utility.DataReader;
 import org.openqa.selenium.WebDriver;
-
-import java.io.IOException;
-import java.util.Map;
 
 public class SearchflightModule {
 
@@ -18,5 +13,13 @@ public class SearchflightModule {
 
     public String getHeaderText() {
         return flightHomePageObject.getheading();
+    }
+
+    public void selectOneWay() {
+        flightHomePageObject.selectOneWayOption();
+    }
+
+    public String addDestination(String destinationColumn) {
+        return flightHomePageObject.enterDestination(destinationColumn);
     }
 }
