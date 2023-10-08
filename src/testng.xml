@@ -1,5 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
 <suite name="Test-Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="com.framework.listeners.RetryListener" />
+    </listeners>
     <test name="ToolsQA-Hotel" >
         <parameter name="browserName" value="edge" />
         <classes>
