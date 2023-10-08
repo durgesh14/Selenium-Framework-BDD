@@ -1,16 +1,17 @@
 package com.framework.pageObjects;
 
+import com.framework.utility.PageManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
-public class FlightHomePageObject {
-    private WebDriver driver;
+public class FlightHomePageObject extends PageManager {
+//    private WebDriver driver;
 
     public FlightHomePageObject(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, Integer.parseInt("10")), this);
     }
 

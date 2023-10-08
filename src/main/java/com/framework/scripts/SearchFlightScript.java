@@ -8,6 +8,7 @@ import com.framework.utility.ExcelReader;
 import com.framework.utility.ExtentManager;
 import com.framework.utility.Log;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 
 import java.util.Map;
 
@@ -42,6 +43,8 @@ public class SearchFlightScript {
         String destinationActual = searchflightModule.addDestination(destinationExpected);
         test.log(Status.INFO, "Actual Destination is "+ destinationActual);
         test.log(Status.INFO, "Expected Destination is "+ destinationExpected);
+        Assert.assertTrue(false);
+
 
     }
 }

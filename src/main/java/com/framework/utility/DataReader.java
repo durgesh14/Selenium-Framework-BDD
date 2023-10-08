@@ -24,4 +24,11 @@ public class DataReader {
         }
         return configValue;
     }
+
+    public static String getUrlBasedOnTest(String testName) throws IOException {
+        String key = testName + ".url";
+        return getProperty(key);
+    }
+
+
 }

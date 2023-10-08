@@ -17,11 +17,6 @@ import java.io.IOException;
 @Epic("Booking Test")
 @Feature("To test the functionality of hotel booking flow")
 public class HotelBooking extends TestCaseBase {
-
-    @BeforeClass
-    public void setup() throws IOException {
-        browserSetup("https://www.booking.com/");
-    }
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Description("Test to verify the search of hotel")

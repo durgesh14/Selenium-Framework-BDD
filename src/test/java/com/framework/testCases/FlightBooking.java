@@ -7,6 +7,7 @@ import com.framework.scripts.SelectHotelsScript;
 import com.framework.utility.DriverManager;
 import com.framework.utility.TestCaseBase;
 import io.qameta.allure.*;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -19,10 +20,6 @@ import java.io.IOException;
 @Feature("To test the functionality of flight booking flow")
 public class FlightBooking extends TestCaseBase {
 
-    @BeforeClass
-    public void setup() throws IOException {
-        browserSetup("https://www.booking.com/flights/");
-    }
     @Test
     @Severity(SeverityLevel.CRITICAL)
     @Description("Test to verify the Title of the page")
@@ -41,6 +38,7 @@ public class FlightBooking extends TestCaseBase {
         String testCaseName = new Object(){}.getClass().getEnclosingMethod().getName();
         SearchFlightScript searchFlightScript = new SearchFlightScript(DriverManager.getInstance().getDriver());
         searchFlightScript.selectOneWay();
+
     }
 
     @Test

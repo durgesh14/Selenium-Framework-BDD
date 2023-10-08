@@ -26,6 +26,8 @@ public class AllureConfig {
         Properties props = new Properties();
         props.put("User", System.getProperty("user.name"));
         props.put("Browser", "Chrome");
+        props.put("Flights.URL", DataReader.getProperty("FlightBooking.url"));
+        props.put("Hotel.URL", DataReader.getProperty("HotelBooking.url"));
         props.put("OS", System.getProperty("os.name"));
 
         FileOutputStream fileOutputStream = new FileOutputStream(String.format(PATH, "environment.properties"));

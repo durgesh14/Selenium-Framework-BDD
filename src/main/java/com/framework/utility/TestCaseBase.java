@@ -4,16 +4,16 @@ import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.framework.listeners.EventListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.openqa.selenium.support.events.WebDriverListener;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.*;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -25,10 +25,11 @@ public class TestCaseBase {
         AllureConfig.configure();
     }
 
-
-    public void browserSetup(String url) throws IOException {
-//        launchBrowser(DataReader.getProperty("url"));
-        launchBrowser(url);
+    @Parameters({"browserName"})
+    @BeforeClass
+    public void setup(String browserName) throws IOException {
+        String url = DataReader.getUrlBasedOnTest(this.getClass().getSimpleName());
+        launchBrowser(url, browserName);
     }
 
     @AfterClass(alwaysRun = true)
@@ -53,13 +54,26 @@ public class TestCaseBase {
         }
     }
 
-    public WebDriver launchBrowser(String url) {
-        System.out.println("Opening Browser");
-//        WebDriverManager.chromedriver().setup();
-        System.setProperty("webdriver.chrome.driver", "D:\\Projects\\Selenium-Framework\\chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-infobars");
-        WebDriver driver = new ChromeDriver(options);
+    public WebDriver launchBrowser(String url, String browserName) {
+        System.out.println("Opening Browser: "+ browserName);
+        WebDriverManager webDriverManager = WebDriverManager.getInstance(DriverManagerType.valueOf(browserName.toUpperCase()));
+        webDriverManager.setup();
+        WebDriver driver;
+
+        switch (browserName.toLowerCase()) {
+            case "firefox":
+                driver = new FirefoxDriver();
+                break;
+            case "edge":
+                driver = new EdgeDriver();
+                break;
+            default:
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--disable-infobars");
+                driver = new ChromeDriver(options);
+                break;
+        }
+
         EventFiringWebDriver eventFiringWebDriver = new EventFiringWebDriver(driver);
         EventListener listener = new EventListener();
         eventFiringWebDriver.register(listener);
@@ -72,6 +86,7 @@ public class TestCaseBase {
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
+
 
     public void closeBrowser(WebDriver driver) {
         System.out.println("Quiting Browser");
