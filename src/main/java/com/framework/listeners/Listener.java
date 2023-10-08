@@ -8,11 +8,17 @@ import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.IOException;
+
 public class Listener implements ITestListener {
     @Override
     public void onTestStart(ITestResult result) {
 //        ExtentManager.startTest(result.getName());
-        ExtentManager.startTest(result.getTestClass().getName());
+        try {
+            ExtentManager.startTest(result.getTestClass().getName(), result.getName());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         Log.startTestCase(result.getName());
     }
 
@@ -58,6 +64,10 @@ public class Listener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext context) {
-        ExtentManager.endTest();
+        try {
+            ExtentManager.endTest();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

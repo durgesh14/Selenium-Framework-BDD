@@ -1,7 +1,7 @@
 package com.framework.utility;
 
+import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
-import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.framework.listeners.EventListener;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
@@ -45,14 +45,11 @@ public class TestCaseBase {
         String testCaseName = result.getMethod().getConstructorOrMethod().getName();
         if (result.getStatus() == ITestResult.FAILURE) {
             String screenShotPath = ScreenshotUtility.takeFullScreenshot(driver, testCaseName + "_FAILED");
-            try {
-                ExtentManager.getTest().error("Screenshot", MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-            } catch (IOException e) {
-                Log.error("Error during capturing screenshot: " + e);
-                throw new RuntimeException(e);
-            }
+            ExtentTest test = ExtentManager.getTest();
+            test.fail("Screenshot", MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
         }
     }
+
 
     public WebDriver launchBrowser(String url, String browserName) {
         System.out.println("Opening Browser: "+ browserName);

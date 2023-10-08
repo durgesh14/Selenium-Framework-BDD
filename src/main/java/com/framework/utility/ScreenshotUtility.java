@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class ScreenshotUtility {
     public static String takeFullScreenshot(WebDriver driver, String testcaseName){
-        String screenshotPath = System.getProperty("user.dir")+"/test-output/screenshots"+testcaseName+DateUtility.getStringDate("_ddMMyyyy_HHmmss")+".png";
+        String screenshotPath = System.getProperty("user.dir")+"/test-output/screenshots/"+testcaseName+DateUtility.getStringDate("_ddMMyyyy_HHmmss")+".png";
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(1000)).takeScreenshot(driver);
         try {
             ImageIO.write(screenshot.getImage(), "PNG", new File(screenshotPath));
