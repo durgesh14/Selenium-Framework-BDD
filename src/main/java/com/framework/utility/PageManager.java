@@ -12,30 +12,65 @@ public class PageManager {
 
     private WebDriver driver;
     private int waitTime = 30;
-    public PageManager(WebDriver driver){
+
+    public PageManager(WebDriver driver) {
         this.driver = driver;
     }
 
+    /**
+     * Finds the first {@link WebElement} using the given method.
+     *
+     * @param locator The locating mechanism to use.
+     * @return The first matching {@link WebElement} on the current page, or null if no element matches.
+     */
     public WebElement findElement(By locator) {
         return driver.findElement(locator);
     }
 
+    /**
+     * Finds all {@link WebElement} elements within the current page using the given mechanism.
+     *
+     * @param locator The locating mechanism to use.
+     * @return A list of all {@link WebElement} elements, or an empty list if nothing matches.
+     */
     public List<WebElement> findElements(By locator) {
         return driver.findElements(locator);
     }
 
+    /**
+     * Clicks the element at the specified location.
+     *
+     * @param locator The locating mechanism of the element to be clicked.
+     */
     public void click(By locator) {
         findElement(locator).click();
     }
 
+    /**
+     * Clicks the specified {@link WebElement}.
+     *
+     * @param element The WebElement to be clicked.
+     */
     public void click(WebElement element) {
         element.click();
     }
 
-    public void clickByJavascript(WebElement element){
-        ((JavascriptExecutor)driver).executeScript("arguments[0].click();",element);
+    /**
+     * Executes a JavaScript click event on the specified {@link WebElement}.
+     *
+     * @param element The WebElement on which to execute the click event.
+     */
+    public void clickByJavascript(WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
 
+    /**
+     * Types the specified text into the element at the specified location,
+     * after clearing any existing text in the element.
+     *
+     * @param locator The locating mechanism of the element.
+     * @param text    The text to type into the element.
+     */
     public void type(By locator, String text) {
         WebElement element = findElement(locator);
         element.clear();
@@ -50,23 +85,24 @@ public class PageManager {
     public String getText(By locator) {
         return findElement(locator).getText();
     }
+
     public String getText(WebElement element) {
         return element.getText();
     }
 
-    public void selectByVisibleText(WebElement element, String visibleText){
+    public void selectByVisibleText(WebElement element, String visibleText) {
         Select select = new Select(element);
         select.selectByVisibleText(visibleText);
     }
 
-    public void selectByIndex(WebElement element, int index){
+    public void selectByIndex(WebElement element, int index) {
         Select select = new Select(element);
         select.selectByIndex(index);
     }
 
     public String getSelectedValue(WebElement element) {
         String value = new Select(element).getFirstSelectedOption().getText();
-        Log.info("Selected Value : "+ value);
+        Log.info("Selected Value : " + value);
         return value;
     }
 
@@ -181,6 +217,7 @@ public class PageManager {
     public void scrollToElement(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
     public void dragAndDrop(By sourceLocator, By targetLocator) {
         Actions actions = new Actions(driver);
         actions.dragAndDrop(findElement(sourceLocator), findElement(targetLocator)).perform();
@@ -235,7 +272,7 @@ public class PageManager {
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitForElementToBeClickable(WebElement element){
+    public void waitForElementToBeClickable(WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
         wait.until(ExpectedConditions.elementToBeClickable(element));
     }

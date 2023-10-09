@@ -16,12 +16,24 @@ public class AllureConfig {
 
     private static final String PATH = resultDir + File.separator + "%s";
 
+    /**
+     * Configures the environment by creating necessary files and directories.
+     * This method invokes the creation of an environment properties file,
+     * a copy of the report history, and an executor JSON file.
+     *
+     * @throws IOException If an error occurs during file operations.
+     */
     public static void configure() throws IOException {
         makeCopyOfHistory();
         createEnvFile();
         createExecutorJSON();
     }
 
+    /**
+     * Creates a properties file containing environment information for Allure reporting.
+     *
+     * @throws IOException If an error occurs during file writing.
+     */
     private static void createEnvFile() throws IOException {
         Properties props = new Properties();
         props.put("User", System.getProperty("user.name"));
@@ -35,6 +47,13 @@ public class AllureConfig {
         System.out.println("Environment Properties file created");
     }
 
+
+    /**
+     * Makes a copy of the report history directory.
+     * If the report directory does not exist, it creates a new one.
+     *
+     * @throws IOException If an error occurs during directory creation or file copy.
+     */
     private static void makeCopyOfHistory() throws IOException {
         if (!resultDir.exists()) {
             System.out.println("Creating new Report Directory");
@@ -49,6 +68,11 @@ public class AllureConfig {
         }
     }
 
+    /**
+     * Creates an executor JSON file containing build information for Allure reporting.
+     *
+     * @throws IOException If an error occurs during file writing.
+     */
     private static void createExecutorJSON() throws IOException {
         Map<String, String> executorMap = new HashMap<>();
         executorMap.put("name", System.getProperty("user.name"));
